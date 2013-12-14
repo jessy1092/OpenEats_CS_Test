@@ -102,9 +102,16 @@ public class CrdSrcController extends Controller {
 
     @play.db.jpa.Transactional
     public static Result inputForm() {
-	Query query = JPA.em().createQuery("SELECT r FROM CSRecord r");
-	List<CSRecord> rList = query.getResultList();
-	return ok(CSInputForm.render(rList.get(rList.size()-1))); 
+		Query query = JPA.em().createQuery("SELECT r FROM CSRecord r");
+		List<CSRecord> rList = query.getResultList();
+		if(rList.size() <= 0)
+		{
+			return ok("list is null"); 
+		}
+		else
+		{
+			return ok(CSInputForm.render(rList.get(rList.size()-1))); 
+		}
     }
 
 }
